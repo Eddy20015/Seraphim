@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
-    //Will be using this GameStateManager as a SceneManager that loads and changes scenes with the correct GameState
-
     private static GameStateManager Instance;
     [SerializeField] private bool StartingInMenu = true;
 
