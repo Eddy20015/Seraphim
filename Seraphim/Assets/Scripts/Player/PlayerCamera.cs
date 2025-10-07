@@ -28,20 +28,45 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        // Get mouse input
-        lookValue = lookAction.ReadValue<Vector2>();
-        float mouseX = lookValue.x * sensX * Time.deltaTime;
-        float mouseY = lookValue.y * sensY * Time.deltaTime;
+        if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+        {
+            enableYawRestraint = false;
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
+            // Get mouse input
+            lookValue = lookAction.ReadValue<Vector2>();
+            float mouseX = lookValue.x * sensX * Time.deltaTime;
+            float mouseY = lookValue.y * sensY * Time.deltaTime;
 
-        xRotation = Mathf.Clamp(xRotation, -pitchRestraint, pitchRestraint);
-        yRotation = enableYawRestraint ? Mathf.Clamp(yRotation, -yawRestraint, yawRestraint) : yRotation;
+            yRotation += mouseX;
+            xRotation -= mouseY;
 
-        // Rotate camera and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            xRotation = Mathf.Clamp(xRotation, -pitchRestraint, pitchRestraint);
+            yRotation = enableYawRestraint ? Mathf.Clamp(yRotation, -yawRestraint, yawRestraint) : yRotation;
+
+            // Rotate camera and orientation
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        }
+        else if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.TALKING)
+        {
+            enableYawRestraint = true;
+
+            // Get mouse input
+            lookValue = lookAction.ReadValue<Vector2>();
+            float mouseX = lookValue.x * sensX * Time.deltaTime;
+            float mouseY = lookValue.y * sensY * Time.deltaTime;
+
+            yRotation += mouseX;
+            xRotation -= mouseY;
+
+            xRotation = Mathf.Clamp(xRotation, -pitchRestraint, pitchRestraint);
+            yRotation = enableYawRestraint ? Mathf.Clamp(yRotation, -yawRestraint, yawRestraint) : yRotation;
+
+            // Rotate camera and orientation
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        }
+            
     }
 
     public void ToggleCursor(bool lockCursor)

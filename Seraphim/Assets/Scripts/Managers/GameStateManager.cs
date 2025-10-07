@@ -11,7 +11,9 @@ public class GameStateManager : MonoBehaviour
     {
         GAMEOVER,
         MENU,
-        PLAYING
+        INTRO,
+        PLAYING,
+        TALKING
     }
 
     private static GAMESTATE GameState;
@@ -59,31 +61,35 @@ public class GameStateManager : MonoBehaviour
         return GameState;
     }
 
+    public static void Intro()
+    {
+        GameState = GAMESTATE.INTRO;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     //set GameState to MENU, Multiplay to NONE and Load Main Menu
     public static void MainMenu()
     {
         GameState = GAMESTATE.MENU;
-        SceneManager.LoadScene(MainMenuName);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        Time.timeScale = 1f;
     }
 
     //set GameState to PLAYING and load a/the level
     //will also be used to restart after a gameover
     //if there is only one level, we could make the string name a SerializeField instead of a parameter
-    public static void Start(string Level)
+    public static void Play()
     {
-
         GameState = GAMESTATE.PLAYING;
-
-        //not sure if this is necessary just cuz this is for local
-        SceneManager.LoadScene(Level);
-
-        //this can be removed if Gameover() will not set timescale to 0
-        Time.timeScale = 1f;
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public static void Talk()
+    {
+        GameState = GAMESTATE.TALKING;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     public void OnClickStart()
     {
         PlayClickSound();
-        GameStateManager.Start(GameSceneName);
+        gameObject.SetActive(false);
     }
 
     public void OnClickOptions()
@@ -80,7 +80,6 @@ public class MainMenu : MonoBehaviour
             }
 
             titleLetter.Init(titleTop, titleBottom, titleSpeed);
-            print(letterTransform.localPosition + "    " + letterSpacing);
             currLetter++;
         }
     }

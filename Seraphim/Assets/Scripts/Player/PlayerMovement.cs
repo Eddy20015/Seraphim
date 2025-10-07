@@ -25,10 +25,6 @@ public class PlayerMovement : MonoBehaviour
             moveDirection = transform.right * moveValue.x + transform.forward * moveValue.y;
             //print(transform.forward + " " + moveValue.y);
         }
-        else
-        {
-            //cc.Move(Vector3.zero);
-        }
     }
     
 

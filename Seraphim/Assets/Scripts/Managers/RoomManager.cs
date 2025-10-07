@@ -1,9 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Fungus;
 
 public class RoomManager : MonoBehaviour
 {
     private static RoomManager Instance;
+    private static Fungus.Flowchart roomFlowchart;
+    private static bool RoomCompleted = false;
+    
+
+    public enum ROOMTYPE
+    {
+        INTRO,
+        SERAPH,
+        MEMORY
+    }
+
+    private static ROOMTYPE currRoomType;
 
     private void Awake()
     {
@@ -16,41 +29,55 @@ public class RoomManager : MonoBehaviour
         {
             Destroy(this);
         }
-    }
-    
-    //THIS COULD ALL BE STUPID AND WE DONT ACTUALLY CARE LOL
-    public struct Condition
-    {
-        public enum CONDITIONTYPE
+
+        try
         {
-            ENTRY,
-            CONTINUE,
-            END
+            roomFlowchart = GameObject.FindAnyObjectByType<Fungus.Flowchart>();
         }
-
-        public bool conditionState; 
-        public string conditionName;
-        public CONDITIONTYPE conditionType;
-        public string switchRoom;
+        catch
+        {
+            Debug.LogError("DIDNT FIND FLOWCHART! PROBLEM");
+        }
     }
 
-    private string currConditionName;
-
-    //public void SelectConditionName(Condition newCondition)
-    //{
-    //    currConditionName = newCondition.conditionName;
-    //}
-
-    public void ConditionMet(Condition newCondition)
+    public static void SetCurrRoomType(ROOMTYPE newRoomType)
     {
-
+        currRoomType = newRoomType;
     }
 
-    private void SwitchRoom(string requestedRoom, Condition switchCondition)
+    public static void EndRoom(string requestedRoom)
     {
-        if(switchCondition.conditionName == currConditionName && switchCondition.conditionState)
+        if(RoomCompleted)
         {
             SceneManager.LoadScene(requestedRoom);
         }
+    }
+
+    public static void BeginRoom(string startingBlock = "")
+    {
+        RoomCompleted = false;
+        if (currRoomType == ROOMTYPE.INTRO)
+        {
+            GameStateManager.Intro();
+        }
+        else if (currRoomType == ROOMTYPE.MEMORY)
+        {
+            GameStateManager.Play();
+        }
+        else if (currRoomType == ROOMTYPE.SERAPH)
+        {
+            ActivateFungus(startingBlock);
+        }
+    }
+
+    public static void ActivateFungus(string startingBlock)
+    {
+        GameStateManager.Talk();
+        roomFlowchart.ExecuteBlock(startingBlock); //call the block that handle Stay or Entry
+    }
+
+    public static void CompleteRoom()
+    {
+        RoomCompleted = true;
     }
 }
