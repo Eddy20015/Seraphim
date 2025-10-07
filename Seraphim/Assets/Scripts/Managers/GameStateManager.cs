@@ -89,7 +89,7 @@ public class GameStateManager : MonoBehaviour
     public static void Talk()
     {
         GameState = GAMESTATE.TALKING;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
 }

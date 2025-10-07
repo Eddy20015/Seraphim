@@ -50,11 +50,6 @@ public class RoomIntro : RoomAbstract
         {
             EnterDialogue();
         }
-        
-        if(state == INTROROOMSTATE.MENU)
-        {
-            print("INTROROOMSTATE.MENU");
-        }
     }
 
     IEnumerator Intro()
@@ -71,7 +66,6 @@ public class RoomIntro : RoomAbstract
     override protected void End()
     {
         //SHOULD HAVE VARIABLE TO CHOOSE WHICH ROOM IS NEXT
-        RoomManager.CompleteRoom();
         RoomManager.EndRoom("SampleScene");
     }
 

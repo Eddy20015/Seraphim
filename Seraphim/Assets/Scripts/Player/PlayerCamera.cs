@@ -28,12 +28,13 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
+        lookValue = lookAction.ReadValue<Vector2>();
         if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
             enableYawRestraint = false;
 
             // Get mouse input
-            lookValue = lookAction.ReadValue<Vector2>();
+            //lookValue = lookAction.ReadValue<Vector2>();
             float mouseX = lookValue.x * sensX * Time.deltaTime;
             float mouseY = lookValue.y * sensY * Time.deltaTime;
 
@@ -52,7 +53,7 @@ public class PlayerCamera : MonoBehaviour
             enableYawRestraint = true;
 
             // Get mouse input
-            lookValue = lookAction.ReadValue<Vector2>();
+            //lookValue = lookAction.ReadValue<Vector2>();
             float mouseX = lookValue.x * sensX * Time.deltaTime;
             float mouseY = lookValue.y * sensY * Time.deltaTime;
 
